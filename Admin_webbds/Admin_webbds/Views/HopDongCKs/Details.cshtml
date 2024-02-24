@@ -1,0 +1,59 @@
+﻿@model Admin_webbds.Models.HopDongCK
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết hợp đồng</h2>
+
+<div>
+    <h4>Hợp đồng chiết khấu</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ngay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ngay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChietKhau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChietKhau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiaoDich.MaGiaoDich)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiaoDich.MaGiaoDich)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoiGioi.Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoiGioi.Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaiKhoan.TaiKhoan1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaiKhoan.TaiKhoan1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Edit", "Edit", new { id = Model.ID })" class="btn btn-primary">Edit</a> |
+    <a href="@Url.Action("Index", "Back to List")" class="btn btn-secondary">Back to List</a>
+</p>

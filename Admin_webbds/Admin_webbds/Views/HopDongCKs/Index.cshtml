@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Admin_webbds.Models.HopDongCK>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double totalGia = 0;
+}
+
+<h2>Hợp đồng chiết khấu</h2>
+
+
+@foreach (var item in Model)
+{
+    totalGia += item.ChietKhau;
+}
+
+
+<div class="row mb-3">
+    <div class="col-md-8">
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+    <div class="col-md-4 text-right">
+        <p class="font-weight-bold">Tổng giá đã thanh toán: @string.Format("{0:0.##}", totalGia) đ</p>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ngay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChietKhau)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiaoDich.MaGiaoDich)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoiGioi.Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaiKhoan.TaiKhoan1)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ngay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChietKhau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaoDich.MaGiaoDich)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoiGioi.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaiKhoan.TaiKhoan1)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Edit", new { id = item.ID })" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Details", "Details", new { id = item.ID })" class="btn btn-info">Details</a>
+                <a href="@Url.Action("Delete", "Delete", new { id = item.ID })" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>

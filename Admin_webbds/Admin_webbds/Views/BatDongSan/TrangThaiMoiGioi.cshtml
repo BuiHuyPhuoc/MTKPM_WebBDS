@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Admin_webbds.Models.BatDongSanVM>
+
+@{
+    ViewBag.Title = "TrangThaiMoiGioi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2 class="mt-4">Kiểm duyệt dự án</h2>
+    <p>
+        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.TieuDe)</th>
+                <th>@Html.DisplayNameFor(model => model.TrangThai)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TieuDe)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(
+                            m => item.TrangThai,
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Duyệt", Value = "true", Selected = item.TrangThai == true },
+                                new SelectListItem { Text = "Chưa duyệt", Value = "false", Selected = item.TrangThai == false }
+                            },
+                            new { @class = "form-control", @id = item.MaBatDongSan, onchange = "updateStatus(this)" }
+                        )
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function updateStatus(selectElement) {
+        var projectId = selectElement.id;
+        var newStatus = selectElement.value;
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UpdateStatus", "BatDongSan")",
+            data: { id: projectId, newStatus: newStatus },
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("Đã xảy ra lỗi trong quá trình cập nhật trạng thái");
+            }
+        });
+    }
+</script>
+ 

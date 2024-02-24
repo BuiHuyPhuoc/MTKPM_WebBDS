@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Admin_webbds.Models.BatDongSan>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="my-4">Danh Sách Bất Động Sản</h2>
+@using (Html.BeginForm("Index", "BatDongSan", FormMethod.Post))
+{
+    <input type="text" name="keyword" placeholder="Nhập Tiêu đề hoặc ID" />
+    <input type="number" name="minPrice" placeholder="Giá từ" />
+    <input type="number" name="maxPrice" placeholder="Giá đến" />
+    <input type="checkbox" name="trangThai" />
+    <input type="submit" value="Tìm kiếm" />
+}
+<div class="row mb-3">
+    <div class="col-md-8">
+        <a href="@Url.Action("Create")" class="btn btn-primary">Tạo Mới</a>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Tiêu Đề</th>
+            <th scope="col">Mô Tả</th>
+            <th scope="col">Giá</th>
+            <th scope="col">Diện Tích</th>
+            <th scope="col">Vị Trí</th>
+            <th scope="col">Tiện Nghi</th>
+            <th scope="col">Thông Tin Liên Hệ</th>
+            <th scope="col">Trạng Thái</th>
+            <th scope="col">Pháp Lý</th>
+            <th scope="col">Môi Giới</th>
+            <th scope="col">Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MaBatDongSan)</td>
+                <td>@Html.DisplayFor(modelItem => item.TieuDe)</td>
+                <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
+                <td>@string.Format("{0:0.##}", item.Gia) đ</td>
+                <td>@Html.DisplayFor(modelItem => item.DienTich)</td>
+                <td>@Html.DisplayFor(modelItem => item.ViTri)</td>
+                <td>@Html.DisplayFor(modelItem => item.TienNghi)</td>
+                <td>@Html.DisplayFor(modelItem => item.ThongTinLienHe)</td>
+                <td>
+                    @if (item.TrangThai.HasValue)
+                    {
+                        <span class="text-@((item.TrangThai.Value ? "success" : "danger"))">
+                            @(!item.TrangThai.Value ? "Chưa duyệt" : "Đã duyệt")
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Không Xác Định</span>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.PhapLy)</td>
+                <td>@Html.DisplayFor(modelItem => item.MoiGioi.Ten)</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Action buttons">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaBatDongSan }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Xem", "Details", new { id = item.MaBatDongSan }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.MaBatDongSan }, new { @class = "btn btn-danger btn-sm" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

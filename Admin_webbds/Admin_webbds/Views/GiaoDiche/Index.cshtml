@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Admin_webbds.Models.GiaoDich>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal totalGia = 0;
+}
+
+<h2>Danh sách hợp đồng giao dịch</h2>
+
+
+@foreach (var item in Model)
+{
+    totalGia += item.Gia ?? 0;
+}
+
+    
+<div class="row mb-3">
+    <div class="col-md-8">
+        <p>
+            @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+    <div class="col-md-4 text-right">
+        <p class="font-weight-bold">Tổng giá đã thanh toán: @string.Format("{0:0.##}", totalGia) đ</p>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaNguoiMua)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayGiaoDich)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BatDongSan.TieuDe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NguoiDung.Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoiGioi.Ten)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNguoiMua)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiaoDich)
+            </td>
+            <td>
+                @string.Format("{0:0.##}", item.Gia) đ
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatDongSan.TieuDe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NguoiDung.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoiGioi.Ten)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaGiaoDich }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaGiaoDich }, new { @class = "btn btn-info btn-sm" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaGiaoDich }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+
+</table>
