@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using webbds.Class;
 using webbds.Models;
 
 namespace webbds.Controllers
@@ -51,7 +52,6 @@ namespace webbds.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MaNguoiDung,Ten,Email,DienThoai,DiaChi,Password")] NguoiDung nguoiDung, string submitButton)
         {
-
             if (submitButton == "Đăng ký")
             {
                 var nguoiDungs = db.NguoiDungs.FirstOrDefault(k => k.Email == nguoiDung.Email);
@@ -63,9 +63,31 @@ namespace webbds.Controllers
                 if (ModelState.IsValid)
                 {
                     // kiểm tra xem người ta có đăng ký với Email này chưa!
-                    db.NguoiDungs.Add(nguoiDung);
-                    db.SaveChanges();
-
+                    string kiemTraMatKhau = "";
+                    PasswordValidator validator = new PasswordValidator();
+                    // Kiểm tra độ dài của mật khẩu
+                    validator.setValidationStrategy(new MinLengthValidation());
+                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    // Kiểm tra kí tự in hoa
+                    validator.setValidationStrategy(new UppercaseValidation());
+                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    // Kiểm tra kí tự thường
+                    validator.setValidationStrategy(new LowercaseValidation());
+                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    // Kiểm tra kí tự số
+                    validator.setValidationStrategy(new HasNumberValidation());
+                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    if (kiemTraMatKhau != "")
+                    {
+                        ModelState.AddModelError("CustomError", kiemTraMatKhau);
+                        ViewBag.ms = kiemTraMatKhau;
+                    }
+                    if (ModelState.IsValid)
+                    {
+                        // Kiểm tra mật khẩu đã thoả các yêu cầu chưa
+                        db.NguoiDungs.Add(nguoiDung);
+                        db.SaveChanges();
+                    }
                 }
             }
             else if (submitButton == "Đăng nhập")
