@@ -64,19 +64,21 @@ namespace webbds.Controllers
                 {
                     // kiểm tra xem người ta có đăng ký với Email này chưa!
                     string kiemTraMatKhau = "";
-                    PasswordValidator validator = new PasswordValidator();
-                    // Kiểm tra độ dài của mật khẩu
-                    validator.setValidationStrategy(new MinLengthValidation());
-                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
-                    // Kiểm tra kí tự in hoa
-                    validator.setValidationStrategy(new UppercaseValidation());
-                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
-                    // Kiểm tra kí tự thường
-                    validator.setValidationStrategy(new LowercaseValidation());
-                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
-                    // Kiểm tra kí tự số
-                    validator.setValidationStrategy(new HasNumberValidation());
-                    kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    PhuocPasswordValidation passwordValidation = new PhuocPasswordValidation();
+                    kiemTraMatKhau = passwordValidation.ValidatePassword(nguoiDung.Password);
+                    //PasswordValidator validator = new PasswordValidator();
+                    //// Kiểm tra độ dài của mật khẩu
+                    //validator.setValidationStrategy(new MinLengthValidation());
+                    //kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    //// Kiểm tra kí tự in hoa
+                    //validator.setValidationStrategy(new UppercaseValidation());
+                    //kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    //// Kiểm tra kí tự thường
+                    //validator.setValidationStrategy(new LowercaseValidation());
+                    //kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
+                    //// Kiểm tra kí tự số
+                    //validator.setValidationStrategy(new HasNumberValidation());
+                    //kiemTraMatKhau += validator.ValidatePassword(nguoiDung.Password);
                     if (kiemTraMatKhau != "")
                     {
                         ModelState.AddModelError("CustomError", kiemTraMatKhau);
@@ -104,7 +106,6 @@ namespace webbds.Controllers
                     TempData["ErrorMessage"] = "Tên đăng nhập và mật khẩu không đúng!";
                     return View(nguoiDungLogin);
                 }
-
             }
             return View(nguoiDung);
         }
