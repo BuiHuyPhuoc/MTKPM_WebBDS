@@ -12,6 +12,9 @@
             font-family: 'Source Sans Pro', sans-serif;
         }
     </style>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
 </head>
 <body class="custom-font" style=" background-color: #EAE0DA; padding: 0; margin: 0">
     <nav style="background-color: #F7F5EB !important" class="navbar navbar-expand-sm bg-light navbar-light">
@@ -24,15 +27,29 @@
             <div class="d-flex">
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Hỏi đáp", "Create", "NhanXet", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Môi giới", "Create", "MoiGioi", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Dự án", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        @if (Session["TaiKhoan"] == null)
+                        <li>@Html.ActionLink("Dự án", "AllProperties", "BatDongSan", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Giới thiệu", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        @if (Session["MoiGioi"] != null)
                         {
-                            <li>@Html.ActionLink("Đăng nhập", "Create", "NguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Đăng tin", "Create", "BatDongSan", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>
+                                @Html.ActionLink("Đăng xuất", "Logout", "NguoiDung", new { area = "" }, new { @class = "btn btn-outline-dark nav-link" })
+                            </li>
                         }
+                        else if (Session["TaiKhoan"] != null)
+                        {
+                            <li>@Html.ActionLink("Hỏi đáp", "Create", "NhanXet", new { area = "" }, new { @class = "nav-link" })</li>
 
-                        <li><button type="button" class="btn btn-outline-dark">Đăng tin</button></li>
+                            <li>@Html.ActionLink("Môi giới", "Details", "MoiGioi", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>
+                                @Html.ActionLink("Đăng xuất", "Logout", "NguoiDung", new { area = "" }, new { @class = "btn btn-outline-dark nav-link" })
+                            </li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Môi giới", "Create", "MoiGioi", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Đăng nhập", "Create", "NguoiDung", new { area = "" }, new { @class = " nav-link" })</li>
+                        }
                     </ul>
                 </div>
             </div>

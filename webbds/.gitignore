@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Loại bỏ thư mục chứa các chuỗi bảo mật
+webbds/webbds/Secret/

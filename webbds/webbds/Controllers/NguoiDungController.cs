@@ -1,20 +1,23 @@
-﻿using System;
+﻿using GoogleAuthentication.Services;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using webbds.Class;
 using webbds.Models;
-
+using Facebook;
 namespace webbds.Controllers
 {
     public class NguoiDungController : Controller
     {
         private BDS_TestEntities db = new BDS_TestEntities();
-
+        SecretString_SingleTon singleTon = SecretString_SingleTon.GetInstance();
         // GET: NguoiDung
         public ActionResult Index()
         {
@@ -42,6 +45,22 @@ namespace webbds.Controllers
         // GET: NguoiDung/Create
         public ActionResult Create()
         {
+            // Set up for google authencation
+            var clientId = SecretString_SingleTon.Google_ClientId;
+            var url = "http://localhost:61552/NguoiDung/GoogleLoginCallBack";
+            var respond = GoogleAuth.GetAuthUrl(clientId, url);
+            ViewBag.Respond = respond;
+
+            // Set up for facebook authencation
+            var f_clientId = SecretString_SingleTon.Facebook_ClientId;
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+                client_id = f_clientId,
+                redirect_uri = "http://localhost:61552/NguoiDung/FacebookLoginCallBack",
+                scope = "public_profile,email"
+            });
+            ViewBag.FacebookLoginUrl = loginUrl;
             return View();
         }
 
@@ -109,6 +128,45 @@ namespace webbds.Controllers
             }
             return View(nguoiDung);
         }
+        public ActionResult FacebookLoginCallBack(string code)
+        {
+            OtherLoginFactory otherLoginFactory = new FacebookLoginFactory();
+            OtherLogin facebookLogin = otherLoginFactory.CreateLoginWay();
+            User user = facebookLogin.GetUserByFacebook(code);
+            if (facebookLogin.NguoiDung == null)
+            {
+                TempData["User"] = user;
+                return RedirectToAction("CreateAccountByOtherLogin", "NguoiDung");
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Đăng nhập thành công!";
+                Session["TaiKhoan"] = facebookLogin.NguoiDung;
+                return RedirectToAction("Index", "NguoiDung");
+            }
+        }
+        public async Task<ActionResult> GoogleLoginCallBack(string code)
+        { 
+            OtherLoginFactory otherLoginFactory = new GoogleLoginFactory();
+            OtherLogin googleLogin = otherLoginFactory.CreateLoginWay();
+            User user = await googleLogin.GetUserByGoogle(code);
+            if (googleLogin.NguoiDung == null)
+            {
+                TempData["User"] = user;
+                return RedirectToAction("CreateAccountByOtherLogin", "NguoiDung");
+            } else
+            {
+                TempData["SuccessMessage"] = "Đăng nhập thành công!";
+                Session["TaiKhoan"] = googleLogin.NguoiDung;
+                return RedirectToAction("Index", "NguoiDung");
+            }
+        }
+
+        public ActionResult CreateAccountByOtherLogin()
+        {
+            User user = TempData["User"] as User;
+            return View(user);
+        }
 
         // GET: NguoiDung/Edit/5
         public ActionResult Edit(int? id)
@@ -126,8 +184,6 @@ namespace webbds.Controllers
         }
 
         // POST: NguoiDung/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MaNguoiDung,Ten,Email,DienThoai,DiaChi,Password")] NguoiDung nguoiDung)
@@ -176,6 +232,11 @@ namespace webbds.Controllers
             base.Dispose(disposing);
         }
 
-
+        public ActionResult Logout()
+        {
+            Session["MoiGioi"] = null;
+            Session["TaiKhoan"] = null;
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
