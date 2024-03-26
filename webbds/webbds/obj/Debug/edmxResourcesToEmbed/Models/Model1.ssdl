@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDS_TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BatDongSan">
+    <Key>
+      <PropertyRef Name="MaBatDongSan" />
+    </Key>
+    <Property Name="MaBatDongSan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TieuDe" Type="nvarchar" MaxLength="255" />
+    <Property Name="MoTa" Type="nvarchar" MaxLength="255" />
+    <Property Name="Gia" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="DienTich" Type="float" />
+    <Property Name="ViTri" Type="nvarchar" MaxLength="255" />
+    <Property Name="Anh" Type="text" />
+    <Property Name="TienNghi" Type="nvarchar" MaxLength="50" />
+    <Property Name="ThongTinLienHe" Type="nvarchar" MaxLength="255" />
+    <Property Name="NgayTao" Type="date" />
+    <Property Name="NgaySua" Type="date" />
+    <Property Name="MaDaiLy" Type="int" />
+    <Property Name="TrangThai" Type="bit" />
+    <Property Name="PhapLy" Type="nvarchar" MaxLength="50" />
+    <Property Name="urlmap" Type="text" />
+  </EntityType>
+  <EntityType Name="GiaoDich">
+    <Key>
+      <PropertyRef Name="MaGiaoDich" />
+    </Key>
+    <Property Name="MaGiaoDich" Type="int" Nullable="false" />
+    <Property Name="MaBatDongSan" Type="int" />
+    <Property Name="MaNguoiMua" Type="int" />
+    <Property Name="MaNguoiBan" Type="int" />
+    <Property Name="NgayGiaoDich" Type="date" />
+    <Property Name="Gia" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="HopDongCK">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="MaTK" Type="int" Nullable="false" />
+    <Property Name="MoiGioi_ID" Type="int" Nullable="false" />
+    <Property Name="Ma_GD" Type="int" Nullable="false" />
+    <Property Name="Ngay" Type="datetime" Nullable="false" />
+    <Property Name="ChietKhau" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LienHeNguoiDung">
+    <Key>
+      <PropertyRef Name="MaLienHe" />
+    </Key>
+    <Property Name="MaLienHe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaNguoiDung" Type="int" />
+    <Property Name="MaBatDongSan" Type="int" />
+    <Property Name="NgayLienHe" Type="date" />
+    <Property Name="NguoiPhuTrach" Type="int" />
+    <Property Name="TrangThai" Type="bit" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
+    <Property Name="TenNguoiDat" Type="nvarchar" MaxLength="255" />
+    <Property Name="SDT" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="MoiGioi">
+    <Key>
+      <PropertyRef Name="MaDaiLy" />
+    </Key>
+    <Property Name="MaDaiLy" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ten" Type="nvarchar" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="DienThoai" Type="nvarchar" MaxLength="20" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="Passowd" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="NguoiDung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ten" Type="nvarchar" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="DienThoai" Type="nvarchar" MaxLength="20" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="Password" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="NhanXet">
+    <Key>
+      <PropertyRef Name="MaNhanXet" />
+    </Key>
+    <Property Name="MaNhanXet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaBatDongSan" Type="int" />
+    <Property Name="MaNguoiDung" Type="int" />
+    <Property Name="DanhGia" Type="int" />
+    <Property Name="BinhLuan" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Quyen">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenQuyen" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaiKhoan" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Quyen_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="YeuThich">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+      <PropertyRef Name="MaBatDongSan" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="int" Nullable="false" />
+    <Property Name="MaBatDongSan" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__BatDongSa__MaDai__2B3F6F97">
+    <End Role="MoiGioi" Type="Self.MoiGioi" Multiplicity="0..1" />
+    <End Role="BatDongSan" Type="Self.BatDongSan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MoiGioi">
+        <PropertyRef Name="MaDaiLy" />
+      </Principal>
+      <Dependent Role="BatDongSan">
+        <PropertyRef Name="MaDaiLy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GiaoDich__MaBatD__3C69FB99">
+    <End Role="BatDongSan" Type="Self.BatDongSan" Multiplicity="0..1" />
+    <End Role="GiaoDich" Type="Self.GiaoDich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatDongSan">
+        <PropertyRef Name="MaBatDongSan" />
+      </Principal>
+      <Dependent Role="GiaoDich">
+        <PropertyRef Name="MaBatDongSan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GiaoDich__MaNguo__3F466844">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
+    <End Role="GiaoDich" Type="Self.GiaoDich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="GiaoDich">
+        <PropertyRef Name="MaNguoiBan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LienHeNgu__MaBat__35BCFE0A">
+    <End Role="BatDongSan" Type="Self.BatDongSan" Multiplicity="0..1" />
+    <End Role="LienHeNguoiDung" Type="Self.LienHeNguoiDung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatDongSan">
+        <PropertyRef Name="MaBatDongSan" />
+      </Principal>
+      <Dependent Role="LienHeNguoiDung">
+        <PropertyRef Name="MaBatDongSan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LienHeNgu__MaNgu__34C8D9D1">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
+    <End Role="LienHeNguoiDung" Type="Self.LienHeNguoiDung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="LienHeNguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NhanXet__MaBatDo__38996AB5">
+    <End Role="BatDongSan" Type="Self.BatDongSan" Multiplicity="0..1" />
+    <End Role="NhanXet" Type="Self.NhanXet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatDongSan">
+        <PropertyRef Name="MaBatDongSan" />
+      </Principal>
+      <Dependent Role="NhanXet">
+        <PropertyRef Name="MaBatDongSan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NhanXet__MaNguoi__398D8EEE">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
+    <End Role="NhanXet" Type="Self.NhanXet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="NhanXet">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__YeuThich__MaBatD__31EC6D26">
+    <End Role="BatDongSan" Type="Self.BatDongSan" Multiplicity="1" />
+    <End Role="YeuThich" Type="Self.YeuThich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BatDongSan">
+        <PropertyRef Name="MaBatDongSan" />
+      </Principal>
+      <Dependent Role="YeuThich">
+        <PropertyRef Name="MaBatDongSan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__YeuThich__MaNguo__30F848ED">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
+    <End Role="YeuThich" Type="Self.YeuThich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="YeuThich">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiaoDich_MoiGioi">
+    <End Role="MoiGioi" Type="Self.MoiGioi" Multiplicity="0..1" />
+    <End Role="GiaoDich" Type="Self.GiaoDich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MoiGioi">
+        <PropertyRef Name="MaDaiLy" />
+      </Principal>
+      <Dependent Role="GiaoDich">
+        <PropertyRef Name="MaNguoiBan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HopDongCK_GiaoDich">
+    <End Role="GiaoDich" Type="Self.GiaoDich" Multiplicity="1" />
+    <End Role="HopDongCK" Type="Self.HopDongCK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GiaoDich">
+        <PropertyRef Name="MaGiaoDich" />
+      </Principal>
+      <Dependent Role="HopDongCK">
+        <PropertyRef Name="Ma_GD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HopDongCK_MoiGioi">
+    <End Role="MoiGioi" Type="Self.MoiGioi" Multiplicity="1" />
+    <End Role="HopDongCK" Type="Self.HopDongCK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MoiGioi">
+        <PropertyRef Name="MaDaiLy" />
+      </Principal>
+      <Dependent Role="HopDongCK">
+        <PropertyRef Name="MoiGioi_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HopDongCK_TaiKhoan">
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+    <End Role="HopDongCK" Type="Self.HopDongCK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoan">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HopDongCK">
+        <PropertyRef Name="MaTK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LienHeNguoiDung_TaiKhoan">
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+    <End Role="LienHeNguoiDung" Type="Self.LienHeNguoiDung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoan">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LienHeNguoiDung">
+        <PropertyRef Name="NguoiPhuTrach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaiKhoan_Quyen">
+    <End Role="Quyen" Type="Self.Quyen" Multiplicity="1" />
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quyen">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="Quyen_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDS_TestModelStoreContainer">
+    <EntitySet Name="BatDongSan" EntityType="Self.BatDongSan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GiaoDich" EntityType="Self.GiaoDich" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HopDongCK" EntityType="Self.HopDongCK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LienHeNguoiDung" EntityType="Self.LienHeNguoiDung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MoiGioi" EntityType="Self.MoiGioi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhanXet" EntityType="Self.NhanXet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="YeuThich" EntityType="Self.YeuThich" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__BatDongSa__MaDai__2B3F6F97" Association="Self.FK__BatDongSa__MaDai__2B3F6F97">
+      <End Role="MoiGioi" EntitySet="MoiGioi" />
+      <End Role="BatDongSan" EntitySet="BatDongSan" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GiaoDich__MaBatD__3C69FB99" Association="Self.FK__GiaoDich__MaBatD__3C69FB99">
+      <End Role="BatDongSan" EntitySet="BatDongSan" />
+      <End Role="GiaoDich" EntitySet="GiaoDich" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GiaoDich__MaNguo__3F466844" Association="Self.FK__GiaoDich__MaNguo__3F466844">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="GiaoDich" EntitySet="GiaoDich" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LienHeNgu__MaBat__35BCFE0A" Association="Self.FK__LienHeNgu__MaBat__35BCFE0A">
+      <End Role="BatDongSan" EntitySet="BatDongSan" />
+      <End Role="LienHeNguoiDung" EntitySet="LienHeNguoiDung" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LienHeNgu__MaNgu__34C8D9D1" Association="Self.FK__LienHeNgu__MaNgu__34C8D9D1">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="LienHeNguoiDung" EntitySet="LienHeNguoiDung" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NhanXet__MaBatDo__38996AB5" Association="Self.FK__NhanXet__MaBatDo__38996AB5">
+      <End Role="BatDongSan" EntitySet="BatDongSan" />
+      <End Role="NhanXet" EntitySet="NhanXet" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NhanXet__MaNguoi__398D8EEE" Association="Self.FK__NhanXet__MaNguoi__398D8EEE">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="NhanXet" EntitySet="NhanXet" />
+    </AssociationSet>
+    <AssociationSet Name="FK__YeuThich__MaBatD__31EC6D26" Association="Self.FK__YeuThich__MaBatD__31EC6D26">
+      <End Role="BatDongSan" EntitySet="BatDongSan" />
+      <End Role="YeuThich" EntitySet="YeuThich" />
+    </AssociationSet>
+    <AssociationSet Name="FK__YeuThich__MaNguo__30F848ED" Association="Self.FK__YeuThich__MaNguo__30F848ED">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="YeuThich" EntitySet="YeuThich" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiaoDich_MoiGioi" Association="Self.FK_GiaoDich_MoiGioi">
+      <End Role="MoiGioi" EntitySet="MoiGioi" />
+      <End Role="GiaoDich" EntitySet="GiaoDich" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HopDongCK_GiaoDich" Association="Self.FK_HopDongCK_GiaoDich">
+      <End Role="GiaoDich" EntitySet="GiaoDich" />
+      <End Role="HopDongCK" EntitySet="HopDongCK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HopDongCK_MoiGioi" Association="Self.FK_HopDongCK_MoiGioi">
+      <End Role="MoiGioi" EntitySet="MoiGioi" />
+      <End Role="HopDongCK" EntitySet="HopDongCK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HopDongCK_TaiKhoan" Association="Self.FK_HopDongCK_TaiKhoan">
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+      <End Role="HopDongCK" EntitySet="HopDongCK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LienHeNguoiDung_TaiKhoan" Association="Self.FK_LienHeNguoiDung_TaiKhoan">
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+      <End Role="LienHeNguoiDung" EntitySet="LienHeNguoiDung" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_Quyen" Association="Self.FK_TaiKhoan_Quyen">
+      <End Role="Quyen" EntitySet="Quyen" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

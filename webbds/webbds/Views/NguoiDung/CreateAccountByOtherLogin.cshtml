@@ -1,0 +1,53 @@
+﻿@model webbds.Class.User
+@{
+    ViewBag.Title = "OtherLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="user">
+    <div class="user_options-container">
+        <div class="user_options-text">
+            <div class="user_options-unregistered">
+                <h2 class="user_unregistered-title">Bạn chưa có tài khoản?</h2>
+                <p class="user_unregistered-text">Đăng ký để có những trãi nghiệm tốt nhất từ chúng tôi.</p>
+            </div>
+        </div>
+
+        <div class="user_options-forms" id="user_options-forms">
+            <div class="user_forms-login">
+                <h2 class="forms_title">Đăng ký</h2>
+                @using (Html.BeginForm("Create", "NguoiDung", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+
+                    <div class="forms_form">
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="text" name="NguoiDung.Ten" value="@Model.Name" class="forms_field-input" placeholder="Tên" readonly autofocus/>
+                            </div>
+                            <div class="forms_field">
+                                <input type="email" name="NguoiDung.Email" value="@Model.Email" class = "forms_field-input" readonly = "Email" required/>
+                            </div>
+                            <div class="forms_field">
+                                <input type="password" name="NguoiDung.Password" class = "forms_field-input" value="" placeholder="Mật khẩu" required />
+                            </div>
+                        </fieldset>
+                        <div class="forms_buttons">
+                            <input type="submit" name="submitButton" value="Đăng ký" class="forms_buttons-action">
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script src="~/Scripts/dangky.js"></script>
+<script>
+    var cc = @Html.Raw(Json.Encode(ViewBag.ms));
+    if (cc != null)
+    alert(cc);
+</script>
