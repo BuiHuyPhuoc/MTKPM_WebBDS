@@ -1,3 +1,5 @@
 # Ignore SecretString.cs file
 webbds/webbds/Secret/
 /webbds/webbds/Secret
+*.txt
+bfg-1.14.0.jar
