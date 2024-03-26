@@ -1,2 +1,2 @@
-# Ngăn file chứa mã bảo mật
-webbds/webbds/Secret/SecretString.cs
+# Ignore SecretString.cs file
+webbds/webbds/Secret/
