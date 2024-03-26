@@ -7,6 +7,7 @@ namespace webbds.Class
 {
     public class SecretString_SingleTon
     {
+        // Secret string 
         private static SecretString_SingleTon instance;
         public static string Facebook_ClientSecret { get {  return "7b51a5f2a88865b104801054057d85c3"; } }
         public static string Facebook_ClientId { get { return "290678663865598"; } }
