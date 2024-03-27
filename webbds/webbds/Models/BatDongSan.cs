@@ -27,7 +27,7 @@ namespace webbds.Models
         public string TieuDe { get; set; }
         public string MoTa { get; set; }
         public Nullable<decimal> Gia { get; set; }
-        public Nullable<double> DienTich { get; set; }
+        public double DienTich { get; set; }
         public string ViTri { get; set; }
         public string Anh { get; set; }
         public string TienNghi { get; set; }

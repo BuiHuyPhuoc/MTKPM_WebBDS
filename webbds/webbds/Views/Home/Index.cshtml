@@ -13,10 +13,18 @@
                     <div class="col-md-6">
                         <form action="@Url.Action("SearchProject", "Search")" method="get">
                             <div class="input-group my-3">
-                                <input type="text" name="keyword" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
-                                <button class="btn btn-light" type="submit">
-                                    <img style="width: 24px; height: 24px" src="~/Content/Images/search-interface-symbol.png" />
-                                </button>
+                                <div class="input-group">
+                                    <input name="keyWord" type="text" class="form-control" placeholder="Tên dự án" aria-label="Username" aria-describedby="basic-addon1">
+                                    <select name="area" class="custom-select" id="">
+                                        <option selected value="null">Diện tích tối thiểu</option>
+                                        <option value="0-100">0-100m2</option>
+                                        <option value="100-300">100-300m2</option>
+                                        <option value="300-100000">Trên 300m2</option>
+                                    </select>
+                                    <button class="btn btn-light" type="submit">
+                                        <img style="width: 24px; height: 24px" src="~/Content/Images/search-interface-symbol.png" />
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
