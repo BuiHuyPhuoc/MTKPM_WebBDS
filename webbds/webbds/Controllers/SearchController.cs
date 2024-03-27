@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using webbds.Class;
 using webbds.Models;
-
+using System.Linq.Dynamic.Core;
 namespace webbds.Controllers
 {
     public class SearchController : Controller
@@ -16,12 +18,25 @@ namespace webbds.Controllers
             return View();
         }
 
-        public ActionResult SearchProject(string keyword)
+        public ActionResult SearchProject(string keyWord, string area)
         {
-            var projects = db.BatDongSans
-                            .Where(p => p.TieuDe.Contains(keyword) && p.TrangThai==true)
-                            .ToList();
+            string[] token = area.Split('-');
+            Nullable<double> minArea;
+            Nullable<double> maxArea;
+            if (area == "null" || area == "")
+            {
+                minArea = null;
+                maxArea = null;
+            } else
+            {
+                minArea = Convert.ToDouble(token[0]);
+                maxArea = Convert.ToDouble(token[1]);
+            }
+            var nameSpec = new NameSpecification(keyWord);
+            var areaSpec = new AreaSpecification(minArea, maxArea);
 
+            var combinedSpec = nameSpec & areaSpec;
+            var projects = db.BatDongSans.Where(combinedSpec.ToExpression()).ToList();
             if (projects.Count == 0)
             {
                 // Xử lý khi không tìm thấy dự án
