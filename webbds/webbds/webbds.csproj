@@ -154,7 +154,6 @@
     <Compile Include="Class\User.cs" />
     <Compile Include="Class\OtherLogin.cs" />
     <Compile Include="Class\PasswordValidation.cs" />
-    <Compile Include="Class\ValidatePassword.cs" />
     <Compile Include="Controllers\BatDongSanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LienHeNguoiDungController.cs" />
