@@ -19,27 +19,11 @@ namespace webbds.Class
             stringBuilder.Append(CheckHasSpecialCharacter(password));
             return stringBuilder.ToString();
         }
-
-        public virtual string CheckLength(string password)
-        {
-            return "";
-        }
-        public virtual string CheckUppercase(string password)
-        {
-            return "";
-        }
-        public virtual string CheckLowercase(string password)
-        {
-            return "";
-        }
-        public virtual string CheckHasNumber(string password)
-        {
-            return "";
-        }
-        public virtual string CheckHasSpecialCharacter(string password)
-        {
-            return "";
-        }
+        public abstract string CheckLength(string password);
+        public abstract string CheckUppercase(string password);
+        public abstract string CheckLowercase(string password);
+        public abstract string CheckHasNumber(string password);
+        public abstract string CheckHasSpecialCharacter(string password);
     }
 
     class PhuocPasswordValidation : PasswordValidation
@@ -69,6 +53,8 @@ namespace webbds.Class
             return regex.IsMatch(password) ? "" : "Mật khẩu phải có kí tự đặc biệt";
         }
     }
+
+    
 
     
 }
