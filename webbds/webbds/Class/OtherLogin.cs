@@ -12,14 +12,14 @@ namespace webbds.Class
     abstract class OtherLogin
     {
         protected BDS_TestEntities db = new BDS_TestEntities();
-        protected SecretString_SingleTon singleTon = SecretString_SingleTon.GetInstance();
+        protected SecretString_SingleTon singleTon 
+            = SecretString_SingleTon.GetInstance();
         public NguoiDung NguoiDung { get; set; }
         public virtual Task<User> GetUserByGoogle(string code) { return null ; }
         public virtual User GetUserByFacebook(string code) { return null ; }
     }
     class GoogleLogin : OtherLogin
     {
-        
         string clientId = SecretString_SingleTon.Google_ClientId;
         string clientSecret = SecretString_SingleTon.Google_ClientSecret;
         protected string url = "http://localhost:61552/NguoiDung/GoogleLoginCallBack";
@@ -32,7 +32,6 @@ namespace webbds.Class
             return googleUser;
         }
     }
-
     class FacebookLogin : OtherLogin 
     {
         string clientId = SecretString_SingleTon.Facebook_ClientId;
@@ -48,17 +47,12 @@ namespace webbds.Class
                 redirect_uri = url,
                 code = code
             });
-
             fb.AccessToken = result.access_token;
             dynamic me = fb.Get("/me?fields=name,email");
             string name = me.name;  
             string email = me.email;
             base.NguoiDung = db.NguoiDungs.Where(x => x.Email == email).FirstOrDefault();
-
-            return new User
-            {
-                Name = name, Email = email
-            };
+            return new User { Name = name, Email = email };
         }
     }
 

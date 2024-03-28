@@ -33,9 +33,15 @@ namespace webbds.Class
 
     public static class ExpressionReplacer
     {
-        public static Expression ReplaceParameter(Expression expression, ParameterExpression oldParameter, ParameterExpression newParameter)
+        public static Expression ReplaceParameter(
+            Expression expression,
+            ParameterExpression oldParameter,
+            ParameterExpression newParameter)
         {
-            return new ParameterReplacer { OldParameter = oldParameter, NewParameter = newParameter }.Visit(expression);
+            return new ParameterReplacer { 
+                OldParameter = oldParameter, 
+                NewParameter = newParameter 
+            }.Visit(expression);
         }
 
         private class ParameterReplacer : ExpressionVisitor
@@ -45,7 +51,8 @@ namespace webbds.Class
 
             protected override Expression VisitParameter(ParameterExpression node)
             {
-                return node == OldParameter ? NewParameter : base.VisitParameter(node);
+                return node == OldParameter 
+                    ? NewParameter : base.VisitParameter(node);
             }
         }
     }
@@ -54,28 +61,21 @@ namespace webbds.Class
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
-
         public AndSpecification(Specification<T> left, Specification<T> right)
         {
             _left = left;
             _right = right;
         }
-
-
         public override Expression<Func<T, bool>> ToExpression()
         {
             var parameter = CreateParameter(); // Tạo tham số mới
-
             var leftExpression = _left.ToExpression();
             var rightExpression = _right.ToExpression();
-
             // Thay thế tham số trong biểu thức của leftExpression và rightExpression
             var leftBody = ExpressionReplacer.ReplaceParameter(leftExpression.Body, leftExpression.Parameters[0], parameter);
             var rightBody = ExpressionReplacer.ReplaceParameter(rightExpression.Body, rightExpression.Parameters[0], parameter);
-
             // Kết hợp hai biểu thức bằng AND
             var andExpression = Expression.AndAlso(leftBody, rightBody);
-
             return Expression.Lambda<Func<T, bool>>(andExpression, parameter);
         }
     }
@@ -84,18 +84,21 @@ namespace webbds.Class
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
-
         public OrSpecification(Specification<T> left, Specification<T> right)
         {
             _left = left;
             _right = right;
         }
-
         public override Expression<Func<T, bool>> ToExpression()
         {
+            var parameter = CreateParameter(); // Tạo tham số mới
             var leftExpression = _left.ToExpression();
             var rightExpression = _right.ToExpression();
-            var orExpression = Expression.OrElse(leftExpression.Body, rightExpression.Body);
+            // Thay thế tham số trong biểu thức của leftExpression và rightExpression
+            var leftBody = ExpressionReplacer.ReplaceParameter(leftExpression.Body, leftExpression.Parameters[0], parameter);
+            var rightBody = ExpressionReplacer.ReplaceParameter(rightExpression.Body, rightExpression.Parameters[0], parameter);
+            // Kết hợp hai biểu thức bằng AND
+            var orExpression = Expression.OrElse(leftBody, rightBody);
             return Expression.Lambda<Func<T, bool>>(orExpression, leftExpression.Parameters);
         }
     }
@@ -103,16 +106,16 @@ namespace webbds.Class
     public class NotSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _spec;
-
         public NotSpecification(Specification<T> spec)
         {
             _spec = spec;
         }
-
         public override Expression<Func<T, bool>> ToExpression()
         {
+            var parameter = CreateParameter(); // Tạo tham số mới
             var expression = _spec.ToExpression();
-            var notExpression = Expression.Not(expression.Body);
+            var _specBody = ExpressionReplacer.ReplaceParameter(expression.Body, expression.Parameters[0], parameter);
+            var notExpression = Expression.Not(_specBody);
             return Expression.Lambda<Func<T, bool>>(notExpression, expression.Parameters);
         }
     }
@@ -127,11 +130,9 @@ namespace webbds.Class
         {
             var parameter = CreateParameter();
             var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-
             var body = _name == null || _name.Trim() == ""
                 ? (Expression)Expression.Constant(true)
                 : Expression.Call(Expression.Property(parameter, "TieuDe"), containsMethod, Expression.Constant(_name));
-
             return Expression.Lambda<Func<BatDongSan, bool>>(body, parameter);
         }
     }
@@ -146,16 +147,6 @@ namespace webbds.Class
         }
         public override Expression<Func<BatDongSan, bool>> ToExpression()
         {
-            //var minArea = _minArea; // Lưu trữ giá trị _minArea trong một biến cục bộ
-            //var maxArea = _maxArea; // Lưu trữ giá trị _maxArea trong một biến cục bộ
-            //if (minArea == null || maxArea == null)
-            //{
-            //    return p => true;
-            //}
-            //else
-            //{
-            //    return p => p.DienTich > minArea && p.DienTich <= maxArea;
-            //}
             var parameter = CreateParameter();
 
             var body = (!_minArea.HasValue || !_maxArea.HasValue)
